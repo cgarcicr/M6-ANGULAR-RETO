@@ -1,0 +1,62 @@
+<!-- Modal -->
+<div *ngIf="showModal" class="modal-backdrop" >
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h5 class="modal-title">Realizar Depósito</h5>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="depositar()">
+        <div class="form-group">
+          <label for="numeroCuenta">Número de Cuenta</label>
+          <input
+            type="text"
+            class="form-control"
+            id="numeroCuenta"
+            [(ngModel)]="numeroCuenta"
+            name="numeroCuenta"
+            placeholder="Ingrese el número de cuenta"
+            required
+            #numeroCuentaModel="ngModel"/>
+            <div *ngIf="numeroCuentaModel.invalid && numeroCuentaModel.touched" class="text-danger">
+              <small *ngIf="numeroCuentaModel.errors?.['required']">El número de cuenta es obligatorio.</small>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label for="monto">Monto a depositar</label>
+          <input
+            type="number"
+            class="form-control"
+            id="monto"
+            [(ngModel)]="monto"
+            name="monto"
+            placeholder="Ingrese el monto"
+            required
+            min="0.01"
+            #montoModel="ngModel"
+            />
+            <div *ngIf="montoModel.invalid && montoModel.touched" class="text-danger">
+              <small *ngIf="montoModel.errors?.['required']">El monto es obligatorio.</small>
+              <small *ngIf="montoModel.errors?.['min']">El monto debe ser mayor que cero.</small>
+            </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer mt-2">
+      <button type="button" class="btn btn-secondary" (click)="close()">Cerrar</button>&nbsp;
+      <button type="button" class="btn btn-primary " (click)="depositar()">Realizar Depósito</button>
+    </div>
+    <!-- Alerta de éxito -->
+    <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show mt-4" role="alert">
+      {{ successMessage }}
+      <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
+    </div>
+
+    <!-- Alerta de error -->
+    <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show mt-4" role="alert">
+      {{ errorMessage }}
+      <button type="button" class="btn-close" (click)="closeAlert()" aria-label="Close"></button>
+    </div>
+
+  </div>
+</div>

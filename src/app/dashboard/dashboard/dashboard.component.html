@@ -1,0 +1,74 @@
+<div class="container mt-5">
+  <!-- Header -->
+  <div class="row">
+    <div class="col-12">
+      <div class="bg-primary text-white p-3 rounded d-flex justify-content-between align-items-center">
+        <h2 class="mb-0">Bienvenido {{name}}</h2>
+        <button class="btn btn-warning" (click)="logout()">
+          <i class="fas fa-sign-out-alt"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-4">
+<div class="col-md-4">
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <div class="d-flex justify-content-between">
+        <div>
+          <h5 class="card-title">Cuenta {{typeAccount}} nro: </h5>
+          <p class="card-text"> {{ accountNumber }}</p>
+        </div>
+        <div>
+          <h5 class="card-title">Saldo:</h5>
+          <p class="card-text">{{ accountBalance | formatoSaldo }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Mostrar transacciones recientes -->
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Últimas 5 transacciones</h5>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Tipo de Transacción</th>
+                <th scope="col">Monto $</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Iterar sobre las transacciones y mostrarlas en filas -->
+              <tr *ngFor="let transaccion of transacciones">
+                <td>{{ transaccion.fechaTransaccion | date: 'dd/MM/yyyy' }}</td>
+                <td>{{ transaccion.tipoTransaccion }}</td>
+                <td>{{ transaccion.monto }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Componente de operaciones -->
+    <div class="col-md-4">
+      <div class="card shadow-sm mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Realizar operaciones</h5>
+          <button class="btn btn-primary btn-block"(click)="openModal()">Depositar</button><br>
+          <button class="btn btn-primary btn-block mt-2" (click)="openModalRetirar()">Retirar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de Depositar -->
+  <app-depositar-modal [showModal]="showModal" (closeModal)="closeModal()"></app-depositar-modal>
+  <app-retirar-modal [showModal]="showModalRetirar" (closeModalRetirar)="closeModalRetirar()"></app-retirar-modal>
+
+</div>
